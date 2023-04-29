@@ -233,10 +233,6 @@ class DoRevisions(forms.ModelForm, core_forms.ConfirmableForm):
         # This customizes the confirmable form method
         potential_errors = []
 
-        if not self.cleaned_data.get('author_note', None):
-            message = 'The Covering Letter field is empty.'
-            potential_errors.append(_(message))
-
         ms_files = self.instance.article.manuscript_files.all()
         if ms_files:
             last_upload = max(set(ms_file.date_uploaded for ms_file in ms_files))
