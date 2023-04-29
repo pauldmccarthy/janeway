@@ -10,6 +10,7 @@ from django.views.generic import TemplateView
 from django.conf import settings
 from django.views.static import serve
 
+from journal import views as journal_views
 from press import views as press_views
 from core import error_views
 from utils.logger import get_logger
@@ -19,7 +20,7 @@ logger = get_logger(__name__)
 include('events.registration')
 
 urlpatterns = [
-    url(r'^$', press_views.index, name='website_index'),
+    url(r'^$', journal_views.home, name='website_index'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^summernote/', include('django_summernote.urls')),
     url(r'', include('core.include_urls')),
