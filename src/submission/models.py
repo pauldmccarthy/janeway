@@ -1203,6 +1203,11 @@ class Article(AbstractLastModifiedModel):
         return [{'editor': assignment.editor, 'editor_type': assignment.editor_type, 'assignment': assignment} for
                 assignment in self.editorassignment_set.all()]
 
+    def non_section_editors(self):
+        return [assignment.editor
+                for assignment in self.editorassignment_set.all()
+                if assignment.editor_type == 'editor']
+
     def section_editors(self, emails=False):
         editors = [assignment.editor for assignment in self.editorassignment_set.filter(editor_type='section-editor')]
 

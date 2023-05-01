@@ -192,17 +192,15 @@
     <tr style="text-align: left">
         <th>Name</th>
         <th>Email</th>
-        <th>Type</th>
     </tr>
-    {% for assignment in article.editors %}
+    {% for editor in article.non_section_editors %}
         <tr>
-            <td>{{ assignment.editor.full_name }}</td>
-            <td><a href="mailto:{{ assignment.editor.email }}">{{ assignment.editor.email }}</a></td>
-            <td>{{ assignment.editor_type|capfirst }}</td>
+            <td>{{ editor.full_name }}</td>
+            <td><a href="mailto:{{ assignment.editor.email }}">{{ editor.email }}</a></td>
         </tr>
         {% empty %}
         <tr>
-            <td colspan="3">No users assigned</td>
+            <td colspan="2">No users assigned</td>
         </tr>
     {% endfor %}
 </table>
