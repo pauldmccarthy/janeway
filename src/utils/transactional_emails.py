@@ -437,7 +437,7 @@ def send_article_decision(**kwargs):
 
     if decision == 'accept':
         subject = 'subject_review_decision_accept'
-    elif decision == 'decline':
+    elif decision in ('decline', 'reject'):
         subject = 'subject_review_decision_decline'
     elif decision == 'undecline':
         subject = 'subject_review_decision_undecline'
