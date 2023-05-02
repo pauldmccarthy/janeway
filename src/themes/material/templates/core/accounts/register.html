@@ -24,7 +24,7 @@
                     {% endif %}
                     <p>{% trans "Password Rules" %}:</p>
                     <ul class="no-top-margin">
-                        <li>- {% blocktrans %}Your password should be {{ request.press.password_length }} characters long.{% endblocktrans %}</li>
+                        <li>- Your password should be {{ request.press.password_length }} characters long.</li>
                         {% if request.press.password_upper %}<li>- {% blocktrans %}Your password should contain at least one upper case letter."{% endblocktrans %} %}</li>{% endif %}
                         {% if request.press.password_number %}<li>- {% blocktrans %}Your password should contain at least one number." %}{% endblocktrans %}</li>{% endif %}
                     </ul>
