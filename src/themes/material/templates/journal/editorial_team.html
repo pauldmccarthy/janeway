@@ -15,7 +15,7 @@
     {% for group in editorial_groups %}
         <div class="row eq-height-row">
             <div class="col m12 default-li">
-                <h2>{{ group.name }}</h2>
+                <b>{{ group.name }}</b>
                 {% if group.description %}<p>{{ group.description|safe }}</p>{% endif %}
             </div>
             {% for member in group.members %}
