@@ -439,7 +439,7 @@ class RevisionRequest(models.Model):
     type = models.CharField(max_length=20, choices=revision_type(), default='minor_revisions')
 
     date_requested = models.DateTimeField(default=timezone.now)
-    date_due = models.DateField()
+    date_due = models.DateField(blank=True, null=True)
     date_completed = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):

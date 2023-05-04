@@ -2133,10 +2133,7 @@ def draft_decision(request, article_id):
 
     form = forms.DraftDecisionForm(
         message_to_editor=message_to_editor,
-        editors=editors,
-        initial={
-            'revision_request_due_date': timezone.now() + timedelta(days=14),
-        }
+        editors=editors
     )
 
     if request.POST:
@@ -2210,8 +2207,7 @@ def draft_decision_text(request, article_id):
 
     if isinstance(date, str) and date != '':
         date = shared.make_timezone_aware(date, '%Y-%m-%d')
-    else:
-        date = timezone.now() + timedelta(days=14)
+        date = date.strftime('%Y-%m-%d')
 
     author_review_url = request.journal.site_url(
         reverse(
@@ -2237,7 +2233,7 @@ def draft_decision_text(request, article_id):
             editor=request.user,
             type=decision,
             date_requested=timezone.now,
-            date_due=date.strftime("%Y-%m-%d"),
+            date_due=date,
             editor_note="[[Add Editor Note Here]]",
         )
         decision_text = logic.get_revision_request_content(
