@@ -52,7 +52,7 @@
                     {{ form.editor|foundation }}
                     {% if draft %}</div>{% endif %}
 
-                    <div id="div_due_date" style="display: none">
+                    <div id="div_due_date">
                         {{ form.revision_request_due_date|foundation }}
                     </div>
 
@@ -143,6 +143,7 @@
 {% endblock %}
 
 {% block js %}
+   {% include "elements/datepicker.html" with target="#id_revision_request_due_date" %}
     {% include "admin/elements/jqte.html" %}
     <script src="{% static "admin/js/csrf.js" %}"></script>
     {% include "admin/elements/review/draft_decisions_js.html" %}

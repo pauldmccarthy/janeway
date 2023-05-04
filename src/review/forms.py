@@ -34,7 +34,7 @@ class DraftDecisionForm(forms.ModelForm):
         editors = kwargs.pop('editors', [])
         super(DraftDecisionForm, self).__init__(*args, **kwargs)
         self.fields['message_to_editor'].initial = linebreaksbr(message_to_editor)
-        self.fields['revision_request_due_date'].widget = HTMLDateInput()
+        self.fields['revision_request_due_date'].widget = forms.DateInput()
         self.fields['revision_request_due_date'].widget.attrs['onchange'] = 'decision_change()'
         self.fields['decision'].widget.attrs[
             'onchange'] = 'decision_change()'

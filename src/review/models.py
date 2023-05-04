@@ -485,10 +485,9 @@ class DecisionDraft(models.Model):
         null=True,
         blank=True,
     )
-    revision_request_due_date = models.DateTimeField(
+    revision_request_due_date = models.DateField(
         blank=True,
         null=True,
-        help_text="Stores a due date for a Drafted Revision Request.",
     )
     editor_decline_rationale = models.TextField(
         null=True,
