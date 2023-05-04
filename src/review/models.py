@@ -148,7 +148,7 @@ class ReviewAssignment(models.Model):
     date_reminded = models.DateField(blank=True, null=True)
 
     is_complete = models.BooleanField(default=False)
-    for_author_consumption = models.BooleanField(default=False)
+    for_author_consumption = models.BooleanField(default=True)
 
     suggested_reviewers = models.TextField(blank=True, null=True)
     comments_for_editor = models.TextField(blank=True, null=True,
