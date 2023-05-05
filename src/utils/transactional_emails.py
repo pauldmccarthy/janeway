@@ -213,6 +213,13 @@ def send_review_complete_acknowledgements(**kwargs):
         'request': request,
         'review_assignment': review_assignment,
     }
+    description = '{0} has completed a review for "{1}"'.format(review_assignment.reviewer.full_name(),
+                                                                article.title)
+
+    log_dict = {'level': 'Info',
+                'action_text': description,
+                'types': 'Review Complete',
+                'target': article}
 
     # send slack
     notify_helpers.send_slack(request, description, ['slack_editors'])
@@ -224,6 +231,7 @@ def send_review_complete_acknowledgements(**kwargs):
         'subject_review_complete_reviewer_acknowledgement',
         review_assignment.reviewer.email,
         context,
+        log_dict=log_dict,
     )
 
     # send to editor
@@ -236,6 +244,7 @@ def send_review_complete_acknowledgements(**kwargs):
             'subject_review_complete_acknowledgement',
             editor.email,
             context,
+            log_dict=log_dict,
         )
 
 
@@ -256,9 +265,14 @@ def send_reviewer_accepted_or_decline_acknowledgements(**kwargs):
         ('accepted' if accepted else 'declined'),
         article.title,
     )
+    log_type = 'Review Request {0}'.format(('Accepted' if accepted else 'Declined'))
+    log_dict = {'level': 'Info',
+                'action_text': description,
+                'types': log_type,
+                'target': article}
 
     util_models.LogEntry.add_entry(
-        types='Review request {0}'.format(('accepted' if accepted else 'declined')),
+        types=log_type,
         description=description,
         level='Info',
         actor=request.user,
@@ -301,6 +315,7 @@ def send_reviewer_accepted_or_decline_acknowledgements(**kwargs):
             'subject_review_accept_acknowledgement',
             review_assignment.reviewer.email,
             reviewer_context,
+            log_dict=log_dict,
         )
 
     else:
@@ -311,6 +326,7 @@ def send_reviewer_accepted_or_decline_acknowledgements(**kwargs):
             'subject_review_decline_acknowledgement',
             review_assignment.reviewer.email,
             reviewer_context,
+            log_dict=log_dict,
         )
 
     # send to editor
@@ -322,6 +338,7 @@ def send_reviewer_accepted_or_decline_acknowledgements(**kwargs):
             'subject_reviewer_acknowledgement',
             editor.email,
             editor_context,
+            log_dict=log_dict,
         )
 
 
