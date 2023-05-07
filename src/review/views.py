@@ -1812,21 +1812,23 @@ def do_revisions(request, article_id, revision_id):
         article__stage__in=submission_models.REVIEW_STAGES,
     )
 
+    article = revision_request.article
+
     reviews = models.ReviewAssignment.objects.filter(
-        article=revision_request.article,
+        article=article,
         is_complete=True,
         for_author_consumption=True,
     ).exclude(decision='withdrawn')
 
     form = forms.DoRevisions(instance=revision_request)
-    revision_files = logic.group_files(revision_request.article, reviews)
+    revision_files = logic.group_files(article, reviews)
 
     if request.POST:
 
         if 'delete' in request.POST:
             file_id = request.POST.get('delete')
             file = get_object_or_404(core_models.File, pk=file_id)
-            files.delete_file(revision_request.article, file)
+            files.delete_file(article, file)
             logic.log_revision_event(
                 'File {0} ({1}) deleted.'.format(
                     file.id,
@@ -1846,13 +1848,19 @@ def do_revisions(request, article_id, revision_id):
             )
 
         elif 'save' in request.POST:
-            covering_letter = request.POST.get('author_note')
-            revision_request.author_note = covering_letter
+            revision_request.author_note = request.POST.get('author_note')
+            revision_request.revised_title = request.POST.get('revised_title')
+            revision_request.revised_abstract = request.POST.get('revised_abstract')
             revision_request.save()
             messages.add_message(
                 request,
                 messages.SUCCESS,
-                'Thanks. Your covering letter has been saved.',
+                'Thanks. Your revisions have been saved.',
+            )
+            logic.log_revision_event(
+                'Changed title/abstract/cover letter.',
+                request.user,
+                revision_request,
             )
             return redirect(
                 reverse(
@@ -1891,7 +1899,11 @@ def do_revisions(request, article_id, revision_id):
                 )
 
                 revision_request.date_completed = timezone.now()
+                article.title = revision_request.revised_title
+                article.abstract = revision_request.revised_abstract
+
                 revision_request.save()
+                article.save()
                 return redirect(reverse('core_dashboard'))
 
     if request.GET.get('file_id', None):
@@ -1911,7 +1923,7 @@ def do_revisions(request, article_id, revision_id):
     context = {
         'revision_request': revision_request,
         'form': form,
-        'article': revision_request.article,
+        'article': article,
         'reviews': reviews,
     }
 

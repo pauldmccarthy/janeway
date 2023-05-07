@@ -442,6 +442,11 @@ class RevisionRequest(models.Model):
     date_due = models.DateField(blank=True, null=True)
     date_completed = models.DateTimeField(blank=True, null=True)
 
+    old_title = models.CharField(max_length=999, blank=True, null=True)
+    old_abstract = models.TextField(blank=True, null=True)
+    revised_title = models.CharField(max_length=999, blank=True, null=True)
+    revised_abstract = models.TextField(blank=True, null=True)
+
     def __str__(self):
         return "Revision of {0} requested by {1}".format(self.article.title, self.editor.full_name())
 

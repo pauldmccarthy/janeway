@@ -354,7 +354,11 @@ def handle_decision_action(article, draft, request):
             editor=draft.section_editor,
             editor_note='',
             type=draft.decision,
-            date_due=draft.revision_request_due_date
+            date_due=draft.revision_request_due_date,
+            old_title=article.title,
+            old_abstract=article.abstract,
+            revised_title=article.title,
+            revised_abstract=article.abstract,
         )
         do_revisions_url = request.journal.site_url(path=reverse(
             'do_revisions',

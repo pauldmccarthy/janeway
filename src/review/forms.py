@@ -191,6 +191,10 @@ class RevisionRequest(forms.ModelForm, core_forms.ConfirmableIfErrorsForm):
         revision_request = super().save(commit=False)
         revision_request.editor = self.editor
         revision_request.article = self.article
+        revision_request.old_title = self.article.title
+        revision_request.old_abstract = self.article.abstract
+        revision_request.revised_title = self.article.title
+        revision_request.revised_abstract = self.article.abstract
 
         if commit:
             revision_request.save()
@@ -223,10 +227,13 @@ class DoRevisions(forms.ModelForm, core_forms.ConfirmableForm):
     class Meta:
         model = models.RevisionRequest
         fields = (
+            'revised_title',
+            'revised_abstract',
             'author_note',
         )
         widgets = {
-            'author_note': SummernoteWidget(),
+            'revised_abstract' : SummernoteWidget(),
+            'author_note' : SummernoteWidget(),
         }
 
     def check_for_potential_errors(self):
