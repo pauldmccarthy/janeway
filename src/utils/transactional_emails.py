@@ -400,6 +400,20 @@ def send_submission_acknowledgement(**kwargs):
         log_dict=log_dict,
     )
 
+    # send email to secondary authors
+    for author in article.authors.all():
+        acontext = dict(context)
+        acontext['author'] = author
+        if author.email != article.correspondence_author.email:
+            notify_helpers.send_email_with_body_from_setting_template(
+                request,
+                'secondary_author_submission_acknowledgement',
+                'subject_secondary_author_submission_acknowledgement',
+                author.email,
+                acontext,
+                log_dict=log_dict,
+            )
+
     # send to all editors
     editors_to_email = setting_handler.get_setting(
         'general', 'editors_for_notification', request.journal).processed_value

@@ -199,6 +199,21 @@
             "name": "email"
         },
         "setting": {
+            "description": "Email sent to secondary authors when an article is submitted.",
+            "is_translatable": true,
+            "name": "secondary_author_submission_acknowledgement",
+            "pretty_name": "Secondary Author Submission Acknowledgement",
+            "type": "rich-text"
+        },
+        "value": {
+            "default": "<p>Dear {{ author.full_name }},</p><p>You have been listed as an author on {{ article.title }}, submitted to Imaging Neuroscience.</p><p>You do not need to take any action if you are in agreement to be listed; all further communication will be via the submitting author. </p><p>If you did not already have an account on the interim Imaging Neuroscience website, one will have been partially created for you as part of the submission process for this new paper. If you would like to access this account fully in future (e.g., to submit your own paper, or to act as a reviewer), please go to the <a href=\"{{ journal.site_url }}\">submission website</a>, click <em>Log in</em>, enter your email address, and click <em>Reset password</em> to set a password up for the first time.</p><p>Regards,</p>"
+        }
+    },
+    {
+        "group": {
+            "name": "email"
+        },
+        "setting": {
             "description": "Email sent to editors when a reviewer accepts or declines a review.",
             "is_translatable": true,
             "name": "reviewer_acknowledgement",
@@ -2649,6 +2664,21 @@
             "is_translatable": true,
             "description": "Subject for Email sent to authors when they have submitted an article.",
             "name": "subject_submission_acknowledgement"
+        },
+        "group": {
+            "name": "email_subject"
+        }
+    },
+    {
+        "value": {
+            "default": "Article Submission"
+        },
+        "setting": {
+            "type": "text",
+            "pretty_name": "Secondary Author Submission Acknowledgement",
+            "is_translatable": true,
+            "description": "Subject line for email sent to secondary authors when an article is submitted.",
+            "name": "subject_secondary_author_submission_acknowledgement"
         },
         "group": {
             "name": "email_subject"

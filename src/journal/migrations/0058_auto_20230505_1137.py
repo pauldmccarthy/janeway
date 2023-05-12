@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
         setting, c = Setting.objects.get_or_create(
             name='editor_revisions_complete_receipt',
             types='rich-text',
-            group=SettingGroup.objects.filter(name='email'),
+            group=SettingGroup.objects.filter(name='email')[0],
             is_translatable=True,
             pretty_name='Editor Revisions Complete Receipt',
             description='Email sent to the handling editor(s) when an author completes revisions.',
