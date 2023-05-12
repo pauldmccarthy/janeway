@@ -385,6 +385,11 @@ def send_submission_acknowledgement(**kwargs):
         ),
         ['slack_editors'])
 
+    # clear the request.user field, otherwise
+    # notify_helpers.send_email will use it to
+    # set the reply-to
+    request.user = None
+
     # send to author
     context = {
         'article': article,
@@ -441,7 +446,6 @@ def send_submission_acknowledgement(**kwargs):
         editor_emails,
         context,
         log_dict=log_dict,
-        custom_reply_to=[f"noreply{settings.DUMMY_EMAIL_DOMAIN}"]
     )
 
 
