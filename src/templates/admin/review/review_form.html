@@ -64,6 +64,8 @@
                     </form>
                 </div>
             </div>
+            {% if assignment.date_accepted %}
+            <!-- Files are only visible once the reviewer has accepted the review request -->
             <div class="box">
                 <div class="title-area">
                     <h2>Review Files</h2>
@@ -92,6 +94,7 @@
                     </table>
                 </div>
             </div>
+            {% endif %}
             {% if assignment.visibility == 'open' or assignment.visibility == 'blind' %}
                 <div class="box">
                     <div class="title-area">
@@ -120,6 +123,8 @@
                 </div>
             {% endif %}
 
+            {% if assignment.date_accepted %}
+            <!-- Review form is only visible once the reviewer has accepted the review request -->
             <div class="box">
               <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -166,6 +171,7 @@
                 <button class="button success" type="submit" name="complete">Complete Review</button>
               </form>
             </div>
+            {% endif %}
         </div>
 
 {% endblock %}
