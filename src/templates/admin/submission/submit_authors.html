@@ -85,7 +85,7 @@
                     <hr/>
                     <form method="POST">
                         {% csrf_token %}
-                        <p>{% trans "You are required to select a main author. This author will receive the communications regarding your articles process through our systems. This does not have to be the Corresponding Author eventually listed in the finalised paper." %}</p>
+                        <p>{% trans "You are required to select a main author. This author will receive the communications regarding your article's process through our systems. This does not have to be the Corresponding Author eventually listed in the finalised paper. At this point, authors only need to have their primary affiliation listed." %}</p>
                         <label for="main-author">{% trans "Select main author" %}:</label>
                         <select class="form-control" id="main-author" name="main-author">
                             <option value="None">---------</option>
