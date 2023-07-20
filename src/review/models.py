@@ -156,7 +156,7 @@ class ReviewAssignment(models.Model):
                                            these will not be shared with the Author.",
                                            verbose_name="Comments for the Editor")
     review_file = models.ForeignKey('core.File', blank=True, null=True)
-    display_review_file = models.BooleanField(default=False)
+    display_review_file = models.BooleanField(default=True)
     permission_to_make_public = models.BooleanField(default=False, help_text='This journal has a policy of sharing reviews openly alongside the published article to aid in transparency. If you give permission here and the article is published, your name and review will be visible.')
     display_public = models.BooleanField(default=False, help_text='Whether this review should be publicly displayed.')
 
