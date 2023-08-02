@@ -470,8 +470,11 @@ def send_article_decision(**kwargs):
                 'types': 'Article Decision',
                 'target': article}
 
+    cc = []
+
     if decision == 'accept':
         subject = 'subject_review_decision_accept'
+        cc.append('editorial-manager@imaging-neuroscience.org')
     elif decision in ('decline', 'reject'):
         subject = 'subject_review_decision_decline'
     elif decision == 'undecline':
@@ -484,6 +487,7 @@ def send_article_decision(**kwargs):
             subject,
             article.correspondence_author.email,
             user_message_content,
+            cc=cc,
             log_dict=log_dict
         )
         notify_helpers.send_slack(request, description, ['slack_editors'])
