@@ -582,6 +582,15 @@ def send_review_reminder(request, form, review_assignment, reminder_type):
     """
     Sends a reminder email to a reviewer
     """
+
+    # cc review reminder to all involved
+    # editors, and to the main journal email
+    article   = review_assignment.article
+    from_addr = core_models.Setting     .objects.filter(name='from_address')
+    from_addr = core_models.SettingValue.objects.filter(journal=article.journal,
+                                                        setting=from_addr)[0].value
+    cc        = list(article.editor_emails()) + [from_addr]
+
     desc = '{sender} sent review reminder of type {type} to {to}'.format(
         sender=request.user.full_name(),
         type=reminder_type,
@@ -597,6 +606,7 @@ def send_review_reminder(request, form, review_assignment, reminder_type):
         form.cleaned_data['subject'],
         review_assignment.reviewer.email,
         form.cleaned_data['body'],
+        cc=cc,
         log_dict=log_dict
     )
 
