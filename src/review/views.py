@@ -6,7 +6,7 @@ __maintainer__ = "Birkbeck Centre for Technology and Publishing"
 
 from uuid import uuid4
 from collections import Counter
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from django.contrib import messages
 from django.urls import reverse
@@ -645,6 +645,11 @@ def accept_review_request(request, assignment_id):
                                                          Q(date_accepted__isnull=True))
 
     assignment.date_accepted = timezone.now()
+
+    # Reset the due date to N weeks from acceptance
+    assignment.date_due = datetime.date(assignment.date_accepted) + \
+        (assignment.date_due - datetime.date(assignment.date_requested))
+
     assignment.save()
 
     kwargs = {'review_assignment': assignment,
